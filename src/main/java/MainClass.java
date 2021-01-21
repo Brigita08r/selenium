@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -7,10 +8,14 @@ import org.openqa.selenium.interactions.Actions;
 import java.util.concurrent.TimeUnit;
 
 public class MainClass {
+
+    static WebDriver driver;
+
     public static void main(String[] args) {
+
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Dell\\Documents\\GitHub\\selenium\\drivers\\chromedriver.exe");
 
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
@@ -136,33 +141,84 @@ public class MainClass {
         //Hovers
         driver.findElement(By.xpath("//a[@href='/hovers']")).click();
         WebElement avatar1 = driver.findElement(By.xpath("//img[@src='/img/avatar-blank.jpg']"));
-        //WebElement avatar2 = driver.findElement(By.xpath("//img[@src='/img/avatar-blank.jpg']"));
-        //WebElement avatar3 = driver.findElement(By.xpath("//img[@src='/img/avatar-blank.jpg']"));
         actions.moveToElement(avatar1).perform();
         driver.findElement(By.xpath("//a[@href='/users/1']")).click(); //View profile
         driver.get("http://the-internet.herokuapp.com/");
 
-
-
         //Infinite Scroll
 
         //Inputs
+        driver.findElement(By.xpath("//a[@href='/inputs']")).click();
+        WebElement inputWindow = driver.findElement(By.xpath("//input[@type='number']"));
+
+        inputWindow.sendKeys("Some String value");
+        String inputValue = inputWindow.getAttribute("value");
+        int size = inputValue.length();
+
+        if(size == 0) {
+            System.out.println("No words");
+            inputWindow.clear();
+            inputWindow.sendKeys("1", "");
+
+        }else System.out.println("Something went wrong");
+        driver.get("http://the-internet.herokuapp.com/");
 
         //JQuery UI Menus
 
         //JavaScript Alerts
+        driver.findElement(By.xpath("//a[@href='/javascript_alerts']")).click();
+        WebElement clickForJsAlert = driver.findElement(By.xpath("//button[@onclick='jsAlert()']"));
+        WebElement clickForJsConfirm = driver.findElement(By.xpath("//button[@onclick='jsConfirm()']"));
+        WebElement clickForPrompt = driver.findElement(By.xpath("//button[@onclick='jsPrompt()']"));
+
+        clickForJsAlert.click();
+        driver.switchTo().alert().accept();
+        driver.getPageSource().contains("You successfuly clicked an alert");
+
+        clickForJsConfirm.click();
+        driver.switchTo().alert().accept();
+        driver.getPageSource().contains("You clicked: Ok");
+
+        clickForPrompt.click();
+        driver.switchTo().alert().accept();
+        driver.getPageSource().contains("You entered: "); //add changes
+
+        driver.get("http://the-internet.herokuapp.com/");
 
         //JavaScript onload event error
+        driver.findElement(By.xpath("//a[@href='/javascript_error']")).click();
+        driver.getPageSource().contains("This page has a JavaScript error in the onload event. " +
+                "This is often a problem to using normal Javascript injection techniques.");
+        driver.get("http://the-internet.herokuapp.com/");
 
         //Key Presses
+        driver.findElement(By.xpath("//a[@href='/key_presses']")).click();
+        WebElement inputTab = driver.findElement(By.xpath("//input[@id='target']"));
+        inputTab.sendKeys(Keys.ENTER);
+        driver.getPageSource().contains("You entered: ENTER");
+        driver.get("http://the-internet.herokuapp.com/");
 
         //Large & Deep DOM
 
         //Multiple Windows
+        driver.findElement(By.xpath("//a[@href='/windows']")).click();
+        String firstPage = driver.getWindowHandle();
+        driver.findElement(By.xpath("//a[@href='/windows/new']")).click();
+
+        for (String windowHandler : driver.getWindowHandles()) {
+            driver.switchTo().window(windowHandler);
+        }
+        driver.switchTo().window(firstPage);
+        driver.get("http://the-internet.herokuapp.com/");
 
         //Nested Frames
 
-        //Notification Messages
+        //Notification Messages.
+        driver.findElement(By.xpath("//a[@href='/notification_message']")).click();
+        driver.getPageSource().contains("Action successful");
+        driver.findElement(By.xpath("//a[@href='/notification_message']")).click();
+        driver.getPageSource().contains(" Action unsuccesful, please try again");
+        driver.get("http://the-internet.herokuapp.com/");
 
         //Redirect Link
 

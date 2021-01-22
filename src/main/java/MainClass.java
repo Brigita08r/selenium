@@ -21,11 +21,11 @@ public class MainClass {
 
         driver.get("http://the-internet.herokuapp.com/");
 
-        //simple click on element
+        //Simple click on element. A/B Testing
         driver.findElement(By.xpath("//a[@href='/abtest']")).click();
         driver.navigate().back();
 
-        //click on different buttons present on page
+        //Add/Remove Elements
         driver.findElement(By.xpath("//a[@href='/add_remove_elements/']")).click();
         WebElement button1 = driver.findElement(By.xpath("//button[@onclick='addElement()']"));
         button1.click();
@@ -33,14 +33,20 @@ public class MainClass {
         button2.click();
         driver.navigate().back();
 
-        //basic authentication
+        //Basic authentication
         driver.get("https://admin:admin@the-internet.herokuapp.com/basic_auth");
         driver.getPageSource().contains("Congratulations! You must have the proper credentials.");
         driver.navigate().back();
 
-        //broken image test
-
         //Challenging DOM
+        driver.findElement(By.xpath("//a[@href='/challenging_dom']")).click();
+        WebElement changingNameButton1 = driver.findElement(By.xpath("//div[@class=\"large-2 columns\"]/a[1]"));
+        WebElement changingNameButton2 = driver.findElement(By.xpath("//div[@class=\"large-2 columns\"]/a[2]"));
+        WebElement changingNameButton3 = driver.findElement(By.xpath("//div[@class=\"large-2 columns\"]/a[3]"));
+        changingNameButton1.isDisplayed();
+        changingNameButton2.isDisplayed();
+        changingNameButton3.isDisplayed();
+        driver.navigate().back();
 
         //Checkboxes
         driver.findElement(By.xpath("//a[@href='/checkboxes']")).click();
@@ -51,8 +57,7 @@ public class MainClass {
             checkbox1.click();
             checkbox2.click();
             System.out.println("Selected checkbox1 and unselected checkbox2");
-        }
-        else System.out.println("This checkbox was already selected");
+        } else System.out.println("This checkbox was already selected");
         driver.navigate().back();
 
         //Context Menu. Right-click menu will trigger a JavaScript alert
@@ -67,7 +72,6 @@ public class MainClass {
         driver.getPageSource().contains("Congratulations! You must have the proper credentials.");
         driver.get("http://the-internet.herokuapp.com/");
 
-        //Disappearing Elements
 
         //Drag and Drop
         driver.findElement(By.xpath("//a[@href='/drag_and_drop']")).click();
@@ -86,25 +90,13 @@ public class MainClass {
             value1.click();
             value2.click();
             System.out.println("Value 1 is selected and the Value 2 was selected");
-        }else System.out.println("Value was not selected");
+        } else System.out.println("Value was not selected");
         driver.navigate().back();
 
-        //Dynamic Content
-
-        //Dynamic Controls
-
-        //Dynamically Loaded Page Elements
-
         //Entry Ad. FLAKY
-        //driver.findElement(By.xpath("//a[@href='/entry_ad']")).click();
-        //driver.findElement(By.xpath("//p[contains(text(), 'Close')]")).click(); //finish closing this alert. FLAKY!
-        //driver.get("http://the-internet.herokuapp.com/");
-
-        //Exit Intent
-        //driver.findElement(By.xpath("//a[@href='/exit_intent']")).click();
-
-        //File Download
-        //driver.findElement(By.xpath("//a[@href='/download']")).click();
+        driver.findElement(By.xpath("//a[@href='/entry_ad']")).click();
+        driver.findElement(By.xpath("//p[contains(text(), 'Close')]")).click(); //finish closing this alert. FLAKY!
+        driver.get("http://the-internet.herokuapp.com/");
 
         //File Upload
         driver.findElement(By.xpath("//a[@href='/upload']")).click();
@@ -114,12 +106,8 @@ public class MainClass {
 
         if (driver.getPageSource().contains("File Uploaded!")) {
             System.out.println("FILE IS UPLOADED!");
-        }else System.out.println("Whoops something went wrong while uploading the file");
+        } else System.out.println("Whoops something went wrong while uploading the file");
         driver.get("http://the-internet.herokuapp.com/");
-
-        //Floating Menu
-
-        //Forgot Password
 
         //Form Authentication
         driver.findElement(By.xpath("//a[@href='/login']")).click();
@@ -129,14 +117,8 @@ public class MainClass {
         WebElement flashAlert = driver.findElement(By.xpath("//div[@class='flash success']"));
         if (flashAlert.isDisplayed()) {
             System.out.println("Successful login, alert is displayed");
-        }else System.out.println("Unsuccessful login");
+        } else System.out.println("Unsuccessful login");
         driver.get("http://the-internet.herokuapp.com/");
-
-        //Frames
-
-        //Geolocation
-
-        //Horizontal Slider
 
         //Hovers
         driver.findElement(By.xpath("//a[@href='/hovers']")).click();
@@ -144,8 +126,6 @@ public class MainClass {
         actions.moveToElement(avatar1).perform();
         driver.findElement(By.xpath("//a[@href='/users/1']")).click(); //View profile
         driver.get("http://the-internet.herokuapp.com/");
-
-        //Infinite Scroll
 
         //Inputs
         driver.findElement(By.xpath("//a[@href='/inputs']")).click();
@@ -155,15 +135,13 @@ public class MainClass {
         String inputValue = inputWindow.getAttribute("value");
         int size = inputValue.length();
 
-        if(size == 0) {
-            System.out.println("No words");
+        if (size == 0) {
+            System.out.println("No words are allowed. Enter a number");
             inputWindow.clear();
             inputWindow.sendKeys("1", "");
 
-        }else System.out.println("Something went wrong");
+        } else System.out.println("Something went wrong");
         driver.get("http://the-internet.herokuapp.com/");
-
-        //JQuery UI Menus
 
         //JavaScript Alerts
         driver.findElement(By.xpath("//a[@href='/javascript_alerts']")).click();
@@ -198,8 +176,6 @@ public class MainClass {
         driver.getPageSource().contains("You entered: ENTER");
         driver.get("http://the-internet.herokuapp.com/");
 
-        //Large & Deep DOM
-
         //Multiple Windows
         driver.findElement(By.xpath("//a[@href='/windows']")).click();
         String firstPage = driver.getWindowHandle();
@@ -211,8 +187,6 @@ public class MainClass {
         driver.switchTo().window(firstPage);
         driver.get("http://the-internet.herokuapp.com/");
 
-        //Nested Frames
-
         //Notification Messages.
         driver.findElement(By.xpath("//a[@href='/notification_message']")).click();
         driver.getPageSource().contains("Action successful");
@@ -220,28 +194,6 @@ public class MainClass {
         driver.getPageSource().contains(" Action unsuccesful, please try again");
         driver.get("http://the-internet.herokuapp.com/");
 
-        //Redirect Link
-
-        //Secure File Download
-
-        //Shadow DOM
-
-        //Shifting Content
-
-        //Slow Resources
-
-        //Sortable Data Tables
-
-        //Status Codes
-
-        //Typos
-
-        //WYSIWYG Editor
-
-
-
-
         driver.quit();
-
     }
 }

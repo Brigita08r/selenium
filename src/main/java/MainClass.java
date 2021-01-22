@@ -101,7 +101,7 @@ public class MainClass {
         //File Upload
         driver.findElement(By.xpath("//a[@href='/upload']")).click();
         //driver.findElement(By.xpath("//input[@id='file-upload']")).click();
-        driver.findElement(By.xpath("//input[@id='file-upload']")).sendKeys("C:\\Users\\Dell\\Desktop\\file\\pic1.jpg");
+        driver.findElement(By.xpath("//input[@id='file-upload']")).sendKeys("C:\\Users\\Dell\\Documents\\GitHub\\selenium\\file\\pic1.jpg");
         driver.findElement(By.xpath("//input[@class='button']")).click();
 
         if (driver.getPageSource().contains("File Uploaded!")) {

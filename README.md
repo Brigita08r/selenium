@@ -8,4 +8,4 @@ It contains various page structures/functions to test.
 For now, all the testing is done in one MainClass.
 However, in a future I plan to write tests for real existing pages and
 then I will be using some more classes as well as Page Object Model and Page Factory.
-So my tests are more readale and not all methods are placed in one java.class only.
+So my tests are more readable and not all methods are placed in one java.class only.
